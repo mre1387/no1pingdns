@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل DNS NO1PING</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap');
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            /* پس زمینه سیاه */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.8);
+            /* سیاه شفاف */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+            /* سایه سبز */
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h1 {
+            color: #ff0000;
+            /* قرمز برای عنوان */
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        input,
+        button,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #00ff00;
+            /* حاشیه سبز */
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 16px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* سیاه شفاف */
+            color: #fff;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #ff0000;
+            /* حاشیه قرمز هنگام فوکوس */
+        }
+
+        button {
+            cursor: pointer;
+            background: linear-gradient(to bottom, #111, #000);
+            /* گرادیانت سیاه */
+            color: #00ff00;
+            /* متن سبز */
+            font-weight: bold;
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+            padding: 12px 20px;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        button:hover {
+            background: linear-gradient(to bottom, #222, #111);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 0, 0.9);
+        }
+
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(0, 255, 0, 0.7);
+        }
+
+        #result4,
+        #result6 {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #00ff00;
+            /* سبز برای نتایج */
+        }
+
+        .ip-address {
+            color: #ff0000;
+            /* قرمز برای IP */
+        }
+
+        .glow-text {
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
+                /* سبز ملایم */
+            }
+
+            50% {
+                text-shadow: 0 0 15px rgba(0, 255, 0, 1);
+                /* سبز قوی */
+            }
+
+            100% {
+                text-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
+                /* سبز ملایم */
+            }
+        }
+
+        #loginContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loginContainer">
+        <div class="container">
+            <h1 class="glow-text">NO1PING - ورود</h1>
+            <label for="username">نام کاربری:</label>
+            <input type="text" id="username" placeholder="نام کاربری">
+            <label for="password">رمز عبور:</label>
+            <input type="password" id="password" placeholder="رمز عبور">
+            <button onclick="login()">ورود</button>
+        </div>
+    </div>
+
+    <div class="container" id="mainContent" style="display:none;">
+        <h1 class="glow-text">NO1PING - پنل DNS</h1>
+        <h2>DNS نسل 4</h2>
+        <button onclick="generateDNS4()">ساخت DNS نسل 4</button>
+        <div id="result4"></div>
+
+        <h2>DNS نسل 6</h2>
+        <button onclick="generateDNS6()">ساخت DNS نسل 6</button>
+        <div id="result6"></div>
+    </div>
+
+    <script>
+        function login() {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            if (username === "mre" && password === "13579") {
+                document.getElementById("loginContainer").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+            } else {
+                alert("نام کاربری یا رمز عبور اشتباه است!");
+            }
+        }
+
+        function generateRandomIP4() {
+            return (Math.floor(Math.random() * 256)) + "." + (Math.floor(Math.random() * 256)) + "." + (Math.floor(Math.random() * 256)) + "." + (Math.floor(Math.random() * 256));
+        }
+
+        function generateDNS4() {
+            let dns1 = generateRandomIP4();
+            let dns2Options = ["10.202.10.10", "10.202.10.11", "37.32.123.30", "37.32.123.23"];
+            let dns2 = dns2Options[Math.floor(Math.random() * dns2Options.length)];
+
+            let resultText = "DNS اول: <span class='ip-address'>" + dns1 + "</span><br>DNS دوم: <span class='ip-address'>" + dns2 + "</span>";
+            document.getElementById("result4").innerHTML = resultText;
+        }
+
+        function generateRandomIP6() {
+            let hex = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+            let ip6 = "";
+            for (let i = 0; i < 8; i++) {
+                for (let j = 0; j < 4; j++) {
+                    ip6 += hex[Math.floor(Math.random() * hex.length)];
+                }
+                if (i < 7) ip6 += ":";
+            }
+            return ip6;
+        }
+
+        function generateDNS6() {
+            let dns1 = generateRandomIP6();
+            let dns2 = generateRandomIP6(); // تولید DNS دوم رندوم (برای تست)
+            let resultText = "DNS اول: <span class='ip-address'>" + dns1 + "</span><br>DNS دوم: <span class='ip-address'>" + dns2 + "</span>";
+            document.getElementById("result6").innerHTML = resultText;
+        }
+    </script>
+</body>
+
+</html>
