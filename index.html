@@ -1,213 +1,347 @@
 <!DOCTYPE html>
 <html lang="fa">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پنل DNS NO1PING</title>
+    <meta charset="utf-8"/>
+    <title>پنل اصلی - وایرگارد و DNS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet"/>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap');
+        * {
+            box-sizing: border-box;
+        }
 
         body {
-            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(160deg, #000000, #1a1a1a);
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            text-align: center;
             margin: 0;
-            padding: 0;
-            background-color: #000;
-            /* پس زمینه سیاه */
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
+            padding: 40px 20px;
         }
 
         .container {
-            background-color: rgba(0, 0, 0, 0.8);
-            /* سیاه شفاف */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
-            /* سایه سبز */
-            text-align: center;
-            width: 90%;
-            max-width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 40px 30px;
+            border-radius: 20px;
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        h1 {
-            color: #ff0000;
-            /* قرمز برای عنوان */
-            text-shadow: 2px 2px 4px #000;
+        .logo {
+            margin-bottom: 30px;
         }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #fff;
+        .logo img {
+            max-width: 200px;
         }
 
-        input,
-        button,
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #00ff00;
-            /* حاشیه سبز */
-            border-radius: 5px;
-            margin: 10px 0;
-            font-size: 16px;
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.5);
-            /* سیاه شفاف */
-            color: #fff;
-            transition: border-color 0.3s ease;
-        }
-
-        input:focus,
-        select:focus {
-            border-color: #ff0000;
-            /* حاشیه قرمز هنگام فوکوس */
+        h2 {
+            font-size: 30px;
+            margin-bottom: 30px;
         }
 
         button {
-            cursor: pointer;
-            background: linear-gradient(to bottom, #111, #000);
-            /* گرادیانت سیاه */
-            color: #00ff00;
-            /* متن سبز */
+            width: 48%;
+            padding: 15px;
+            margin: 10px 1%;
+            border: none;
+            border-radius: 10px;
             font-weight: bold;
-            border: 2px solid #00ff00;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
-            padding: 12px 20px;
-            margin-top: 10px;
+            font-size: 16px;
+            background: linear-gradient(145deg, #FFD700, #FFA500);
+            color: black;
+            cursor: pointer;
             transition: all 0.3s ease;
-            outline: none;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.6);
         }
 
         button:hover {
-            background: linear-gradient(to bottom, #222, #111);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 255, 0, 0.9);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 6px 16px rgba(255, 215, 0, 0.8);
         }
 
-        button:active {
-            transform: translateY(1px);
-            box-shadow: 0 2px 10px rgba(0, 255, 0, 0.7);
+        .panel {
+            display: none;
+            margin-top: 30px;
+            text-align: right;
         }
 
-        #result4,
-        #result6 {
-            margin-top: 20px;
-            font-size: 18px;
+        label {
             font-weight: bold;
-            color: #00ff00;
-            /* سبز برای نتایج */
+            display: block;
+            margin: 15px 0 5px;
+            font-size: 15px;
         }
 
-        .ip-address {
-            color: #ff0000;
-            /* قرمز برای IP */
+        select {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: black;
+            margin-bottom: 20px;
+            outline: none;
         }
 
-        .glow-text {
-            animation: glow 1.5s infinite alternate;
+        pre {
+            background: #111;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            text-align: left;
+            direction: ltr;
+            overflow-x: auto;
         }
 
-        @keyframes glow {
-            0% {
-                text-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
-                /* سبز ملایم */
-            }
-
-            50% {
-                text-shadow: 0 0 15px rgba(0, 255, 0, 1);
-                /* سبز قوی */
-            }
-
-            100% {
-                text-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
-                /* سبز ملایم */
-            }
-        }
-
-        #loginContainer {
+        .ip-block {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 10px;
+            direction: ltr;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
+        }
+
+        .ip-text {
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .copy-btn {
+            padding: 6px 10px;
+            font-size: 13px;
+            background: #00b894;
+            color: black;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #00a381;
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .footer a {
+            color: #00ff7f;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            button {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+
+        .disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #ping-display {
+            margin-top: 20px;
+            font-size: 16px;
         }
     </style>
 </head>
-
 <body>
-
-    <div id="loginContainer">
-        <div class="container">
-            <h1 class="glow-text">NO1PING - ورود</h1>
-            <label for="username">نام کاربری:</label>
-            <input type="text" id="username" placeholder="نام کاربری">
-            <label for="password">رمز عبور:</label>
-            <input type="password" id="password" placeholder="رمز عبور">
-            <button onclick="login()">ورود</button>
-        </div>
+<div class="container">
+    <div class="logo">
+        <img alt="NO1 SHOP Logo" src="no1shop-logo.jpg"/>
     </div>
-
-    <div class="container" id="mainContent" style="display:none;">
-        <h1 class="glow-text">NO1PING - پنل DNS</h1>
-        <h2>DNS نسل 4</h2>
-        <button onclick="generateDNS4()">ساخت DNS نسل 4</button>
-        <div id="result4"></div>
-
-        <h2>DNS نسل 6</h2>
-        <button onclick="generateDNS6()">ساخت DNS نسل 6</button>
-        <div id="result6"></div>
+    <h2>NO1PING</h2>
+    <button onclick="showPanel('wireguard')">وایرگارد</button>
+    <button onclick="showPurchaseMessage()" class="disabled">DNS اختصاصی</button>
+    <div class="panel" id="wireguard">
+        <h3>⚡ ساخت کانفیگ WireGuard ⚡</h3>
+        <label for="country-wg">🌍 انتخاب کشور:</label>
+        <select id="country-wg" onchange="checkCountry()">
+            <option value="germany">🇩🇪 آلمان</option>
+            <option value="turkey">🇹🇷 ترکیه (به زودی)</option>
+            <option value="uae">🇦🇪 امارات (به زودی)</option>
+            <option value="iraq">🇮🇶 عراق (به زودی)</option>
+            <option value="netherlands">🇳🇱 هلند (به زودی)</option>
+            <option value="russia">🇷🇺 روسیه (به زودی)</option>
+            <option value="france">🇫🇷 فرانسه (به زودی)</option>
+        </select>
+        <button onclick="generateWireGuardConfig()" id="wireguard-button">🎯 بساز و دانلود کن</button>
+        <pre id="configOutput"></pre>
+        <div id="ping-display"></div>
     </div>
-
+    <div class="panel" id="dns">
+        <h3>ساخت DNS اختصاصی</h3>
+        <label for="country-dns">🌍 انتخاب کشور:</label>
+        <select id="country-dns">
+            <option value="germany">🇩🇪 آلمان</option>
+        </select>
+        <button onclick="showPurchaseMessage()">🎯 تولید آی‌پی‌ها</button>
+        <div id="output"></div>
+    </div>
+    <div class="footer">
+        <p>
+            <a href="https://t.me/NO1_SHOP" target="_blank">کانال فروشگاه</a> |
+            <a href="https://instagram.com/NO1_tactic" target="_blank">تاکتیک تیم</a> |
+        </p>
+    </div>
     <script>
-        function login() {
-            let username = document.getElementById("username").value;
-            let password = document.getElementById("password").value;
 
-            if (username === "mre" && password === "13579") {
-                document.getElementById("loginContainer").style.display = "none";
-                document.getElementById("mainContent").style.display = "block";
+        function showPanel(id) {
+            document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+        }
+
+        function randHexSegment(len = 4) {
+            return [...Array(len)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+        }
+
+        const ipData = {
+            france: {
+                ipv4: () => `72.89.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`,
+                ipv6: () => `fr02:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}`
+            },
+            germany: {
+                ipv4: () => `185.97.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`,
+                ipv6: () => `de02:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}`
+            },
+            turkey: {
+                ipv4: () => `185.98.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`,
+                ipv6: () => `tr03:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}`
+            },
+            uae: {
+                ipv4: () => `5.63.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`,
+                ipv6: () => `ae01:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}`
+            },
+            iraq: {
+                ipv4: () => `79.128.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`,
+                ipv6: () => `iq01:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}`
+            },
+            netherlands: {
+                ipv4: () => `185.127.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`,
+                ipv6: () => `nl01:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}`
+            },
+            russia: {
+                ipv4: () => `185.39.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`,
+                ipv6: () => `ru01:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}:${randHexSegment()}`
+            }
+        };
+
+        function generateIPs() {
+            const country = document.getElementById("country-dns").value;
+            const gen = ipData[country];
+            const out = document.getElementById("output");
+            out.innerHTML = "";
+            out.innerHTML += genHTML(gen.ipv4());
+            for (let i = 0; i < 2; i++) {
+                out.innerHTML += genHTML(gen.ipv6());
+            }
+        }
+
+        function genHTML(ip) {
+            return `<div class="ip-block"><span class="ip-text">${ip}</span><button class="copy-btn" onclick="copyText('${ip}')">کپی</button></div>`;
+        }
+
+        function generateWireGuardConfig() {
+            const country = document.getElementById("country-wg").value;
+            const ipGen = ipData[country];
+            const ipv4_1 = ipGen.ipv4();
+            const ipv4_2 = ipGen.ipv4();
+
+            const privateKey = 'cCqX2Xy+d7ePzq9zNRg2hLq7jzYrwGyavhO4Y3HVtVw=';
+            const publicKey = 'W0tCFiYQxMKy9lDtXrLDc/ZPZmpU6xwZJwYt2tkMjCA=';
+            const dns = '78.157.42.100, 10.202.10.10';
+            const mtu = 1420;
+
+            const config = `[Interface]
+PrivateKey = ${privateKey}
+Address = ${ipv4_1}/32, ${ipv4_2}/32
+DNS = ${dns}
+MTU = ${mtu}
+
+[Peer]
+PublicKey = ${publicKey}
+Endpoint = ${ipv4_1}:51820
+PersistentKeepalive = 25`;
+
+            document.getElementById('configOutput').textContent = config;
+
+            let fileName = prompt("📁 نام کانفیگ:", "");
+            if (!fileName || fileName.trim() === "") fileName = "WG-" + Date.now();
+
+            const blob = new Blob([config], { type: 'application/x-wireguard-conf' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName + ".conf";
+            link.click();
+
+            // Start the ping display process *after* the config is generated.
+            displayPing();
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            const message = document.createElement('div');
+            message.textContent = 'کپی شد!';
+            message.style.position = 'fixed';
+            message.style.bottom = '20px';
+            message.style.right = '20px';
+            message.style.background = '#0f0';
+            message.style.color = '#000';
+            message.style.padding = '10px 20px';
+            message.style.borderRadius = '10px';
+            message.style.boxShadow = '0 0 10px rgba(0,0,0,0.3)';
+            message.style.zIndex = 9999;
+            document.body.appendChild(message);
+            setTimeout(() => message.remove(), 1500);
+        }
+
+        function showPurchaseMessage() {
+            alert("برای شما در دسترس نیست. لطفا اقدام به خرید کنید.");
+        }
+
+        function checkCountry() {
+            const countrySelect = document.getElementById("country-wg");
+            const selectedCountry = countrySelect.value;
+            const wireguardButton = document.getElementById("wireguard-button");
+
+            if (selectedCountry !== "germany") {
+                alert("به زودی!");
+                wireguardButton.disabled = true;
             } else {
-                alert("نام کاربری یا رمز عبور اشتباه است!");
+                wireguardButton.disabled = false;
             }
         }
 
-        function generateRandomIP4() {
-            return (Math.floor(Math.random() * 256)) + "." + (Math.floor(Math.random() * 256)) + "." + (Math.floor(Math.random() * 256)) + "." + (Math.floor(Math.random() * 256));
-        }
+        // Call checkCountry on page load to disable the button if Germany isn't selected by default
+        checkCountry();
 
-        function generateDNS4() {
-            let dns1 = generateRandomIP4();
-            let dns2Options = ["10.202.10.10", "10.202.10.11", "37.32.123.30", "37.32.123.23"];
-            let dns2 = dns2Options[Math.floor(Math.random() * dns2Options.length)];
+        function displayPing() {
+            const pingDisplay = document.getElementById("ping-display");
+            pingDisplay.textContent = "در حال محاسبه پینگ در ایران...";
 
-            let resultText = "DNS اول: <span class='ip-address'>" + dns1 + "</span><br>DNS دوم: <span class='ip-address'>" + dns2 + "</span>";
-            document.getElementById("result4").innerHTML = resultText;
-        }
-
-        function generateRandomIP6() {
-            let hex = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
-            let ip6 = "";
-            for (let i = 0; i < 8; i++) {
-                for (let j = 0; j < 4; j++) {
-                    ip6 += hex[Math.floor(Math.random() * hex.length)];
-                }
-                if (i < 7) ip6 += ":";
-            }
-            return ip6;
-        }
-
-        function generateDNS6() {
-            let dns1 = generateRandomIP6();
-            let dns2 = generateRandomIP6(); // تولید DNS دوم رندوم (برای تست)
-            let resultText = "DNS اول: <span class='ip-address'>" + dns1 + "</span><br>DNS دوم: <span class='ip-address'>" + dns2 + "</span>";
-            document.getElementById("result6").innerHTML = resultText;
+            setTimeout(() => {
+                // Generate a random ping between 40 and 80
+                const ping = Math.floor(Math.random() * (80 - 40 + 1)) + 40;
+                pingDisplay.textContent = `پینگ در ایران: ${ping}ms`;
+            }, 3000); // 3 seconds
         }
     </script>
+</div>
 </body>
-
 </html>
